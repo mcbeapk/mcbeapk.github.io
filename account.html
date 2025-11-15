@@ -1,110 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>login / signup</title>
+  <meta charset="UTF-8" />
+  <title>your account page</title>
   <style>
     body {
       font-family: sans-serif;
-      background: #212425;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-
-    .box {
-      background: #323738;
-      padding: 25px;
-      width: 300px;
-      border-radius: 8px;
-      color: white;
-    }
-
-    h2 {
-      margin: 0 0 15px 0;
-      text-align: center;
-    }
-
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #444;
-      background: #2a2e2f;
-      color: white;
-      border-radius: 4px;
-    }
-
-    button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      background: #00b2ff;
-      color: black;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    #response {
-      margin-top: 12px;
-      color: #ff6b6b;
-      text-align: center;
-      font-size: 14px;
-      min-height: 20px;
+      background: #111;
+      color: #ddd;
     }
   </style>
 </head>
+
 <body>
+  <h1>account page</h1>
 
-<div class="box">
-  <h2>login</h2>
-  <input id="loginUser" placeholder="username">
-  <input id="loginPass" type="password" placeholder="password">
-  <button onclick="login()">login</button>
+  <form id="loginForm">
+    <input type="text" id="username" placeholder="username" required />
+    <input type="password" id="password" placeholder="password" required />
+    <button type="submit">login</button>
+  </form>
 
-  <h2 style="margin-top: 25px;">signup</h2>
-  <input id="signupUser" placeholder="username">
-  <input id="signupPass" type="password" placeholder="password">
-  <button onclick="signup()">signup</button>
+  <p id="status"></p>
 
-  <div id="response"></div>
-</div>
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-<script>
-const scriptURL = "https://script.google.com/macros/s/AKfycbxjh2qlLxwJOE6HPuMCVFc47QQV0VUFgEP-395oy2o590a40QESbquJS45AxE0NijaubQ/exec";
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
 
-async function signup() {
-  const username = document.getElementById("signupUser").value.trim();
-  const password = document.getElementById("signupPass").value.trim();
-  send({ mode: "signup", username, password });
-}
-
-async function login() {
-  const username = document.getElementById("loginUser").value.trim();
-  const password = document.getElementById("loginPass").value.trim();
-  send({ mode: "login", username, password });
-}
-
-async function send(data) {
-  try {
-    const res = await fetch(scriptURL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      try {
+        const res = await google.script.run
+          .withSuccessHandler((result) => {
+            document.getElementById('status').textContent = result;
+          })
+          .withFailureHandler((err) => {
+            document.getElementById('status').textContent = "server error: " + err;
+          })
+          .login(username, password);
+      } catch (err) {
+        document.getElementById('status').textContent = "fetch fail: " + err;
+      }
     });
-
-    const json = await res.json();
-    document.getElementById("response").innerText = json.message;
-  } catch (err) {
-    document.getElementById("response").innerText = "server error: " + err;
-  }
-}
-</script>
+  </script>
 
 </body>
 </html>
