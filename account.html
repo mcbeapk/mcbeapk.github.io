@@ -1,32 +1,71 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>redirecting...</title>
-  <meta http-equiv="refresh" content="0; URL='https://script.google.com/macros/s/AKfycbxjh2qlLxwJOE6HPuMCVFc47QQV0VUFgEP-395oy2o590a40QESbquJS45AxE0NijaubQ/exec'">
-  <style>
-    body {
-      font-family: sans-serif;
-      background: #212425;
-      color: #00b2ff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .box {
-      background: #323738;
-      padding: 20px 30px;
-      border-radius: 8px;
-      text-align: center;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>welcome</title>
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #212425;
+    color: #f0f0f0;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .panel {
+    background: #323738;
+    padding: 40px;
+    border-radius: 12px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  }
+
+  h1 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 25px;
+  }
+
+  a.button {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #00b2ff;
+    color: #212425;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 6px;
+    transition: 0.15s;
+  }
+
+  a.button:hover {
+    background: #0095d4;
+  }
+</style>
+
 </head>
 <body>
-  <div class="box">
-    <h2>loading your login page…</h2>
-    <p>if you're not redirected automatically, <a href="https://script.google.com/macros/s/YOUR_DEPLOYED_ID/exec" style="color:#00b2ff;">tap here</a>.</p>
-  </div>
+
+<div class="panel">
+  <h1>welcome</h1>
+  <p>this is your homepage. the login system lives on your app script backend.</p>
+
+  <a class="button" href="https://script.google.com/macros/s/AKfycbxjh2qlLxwJOE6HPuMCVFc47QQV0VUFgEP-395oy2o590a40QESbquJS45AxE0NijaubQ/exec">
+    login / signup
+  </a>
+</div>
+
 </body>
 </html>
