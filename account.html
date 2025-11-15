@@ -1,49 +1,124 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8" />
-  <title>your account page</title>
+  <meta charset="UTF-8">
+  <title>login / signup</title>
   <style>
     body {
       font-family: sans-serif;
-      background: #111;
+      background: #212425;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
       color: #ddd;
+    }
+    .panel {
+      background: #323738;
+      padding: 30px;
+      border-radius: 8px;
+      width: 300px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background: #2a2d2e;
+      color: #ddd;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #00b2ff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      color: #000;
+    }
+    .switch {
+      text-align: center;
+      margin-top: 14px;
+      cursor: pointer;
+      color: #00b2ff;
+    }
+    #status {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 14px;
     }
   </style>
 </head>
 
 <body>
-  <h1>account page</h1>
 
-  <form id="loginForm">
-    <input type="text" id="username" placeholder="username" required />
-    <input type="password" id="password" placeholder="password" required />
-    <button type="submit">login</button>
-  </form>
+<div class="panel">
+  <h2 id="title">login</h2>
 
-  <p id="status"></p>
+  <input id="username" type="text" placeholder="username">
+  <input id="password" type="password" placeholder="password">
 
-  <script>
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
+  <button id="actionBtn">login</button>
 
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
+  <div class="switch" onclick="toggleMode()">don't have an account? sign up</div>
 
-      try {
-        const res = await google.script.run
-          .withSuccessHandler((result) => {
-            document.getElementById('status').textContent = result;
-          })
-          .withFailureHandler((err) => {
-            document.getElementById('status').textContent = "server error: " + err;
-          })
-          .login(username, password);
-      } catch (err) {
-        document.getElementById('status').textContent = "fetch fail: " + err;
-      }
+  <div id="status"></div>
+</div>
+
+<script>
+let mode = "login";
+
+// CHANGE THIS TO YOUR WEB APP URL
+const scriptURL = "https://script.google.com/macros/s/AKfycbxjh2qlLxwJOE6HPuMCVFc47QQV0VUFgEP-395oy2o590a40QESbquJS45AxE0NijaubQ/exec";
+
+function toggleMode() {
+  mode = mode === "login" ? "signup" : "login";
+  document.getElementById("title").innerText = mode;
+  document.getElementById("actionBtn").innerText = mode;
+  document.querySelector(".switch").innerText =
+    mode === "login"
+    ? "don't have an account? sign up"
+    : "already have an account? login";
+}
+
+document.getElementById("actionBtn").addEventListener("click", async () => {
+  const username = document.getElementById("username").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const status = document.getElementById("status");
+
+  if (!username || !password) {
+    status.textContent = "fill out everything pls";
+    return;
+  }
+
+  status.textContent = "loading...";
+
+  try {
+    const response = await fetch(scriptURL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        mode: mode,
+        username: username,
+        password: password
+      })
     });
-  </script>
+
+    const data = await response.json();
+    status.textContent = data.message;
+
+  } catch (err) {
+    status.textContent = "server error: " + err;
+  }
+});
+</script>
 
 </body>
 </html>
