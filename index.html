@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>mcbeapk</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: #0d0d0d;
+      color: #ffffff;
+    }
+
+    header {
+      padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      background: #181818;
+      border-bottom: 1px solid #242424;
+    }
+
+    .content {
+      padding: 15px;
+      padding-bottom: 90px;
+    }
+
+    .card {
+      background: #1b1b1b;
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      border: 1px solid #242424;
+    }
+
+    .card img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      margin: 0 0 5px 0;
+      font-size: 18px;
+    }
+
+    .card p {
+      opacity: 0.7;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 65px;
+      background: #111;
+      border-top: 1px solid #242424;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .nav button {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      opacity: 0.7;
+    }
+
+    .nav button.active {
+      opacity: 1;
+      font-weight: bold;
+    }
+
+    .nav button:focus {
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+  <header>mcbeapk</header>
+
+  <div class="content">
+    <h2 style="margin-bottom: 15px;">new releases</h2>
+
+    <div class="card">
+      <img src="https://i.imgur.com/lrF6e0H.jpeg" alt="">
+      <h3>realistic shaders v3</h3>
+      <p>performance friendly, fresh shadows, improved lighting.</p>
+    </div>
+
+    <div class="card">
+      <img src="https://i.imgur.com/p8NfBkE.jpeg" alt="">
+      <h3>furniture pack</h3>
+      <p>modern furniture set with animations.</p>
+    </div>
+
+    <div class="card">
+      <img src="https://i.imgur.com/X0TslYH.jpeg" alt="">
+      <h3>mob expansion</h3>
+      <p>adds 12 mobs with custom ai.</p>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="active" onclick="location.href='/'">home</button>
+    <button onclick="location.href='/new'">new</button>
+  </div>
+
+</body>
+</html>
