@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>idktoast mods</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
   <style>
     html,body{
       height:100%;
@@ -16,21 +14,15 @@
       background:#212425;
       color:#00b2ff
     }
+    /* font registration — renamed to "mcfont" per your folder setup */
     @font-face {
-      font-family: 'font'; /* Choose a name for your font */
-      src: url('fonts/font.woff2') format('ttf');
-      font-weight: normal;
+      font-family: 'mcfont';
+      src: url('/mnt/data/mojangles.otf.zip.ttf') format('truetype');
+      font-weight: 100 900;
       font-style: normal;
-      /* Add other descriptors like font-display if needed */
-    }    
-    .wrap{
-      height:100%;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:top;
-      gap:16px;
-      text-align:center;
+      font-display: swap;
+    }
+
     }
     h1{
       font-weight:700;
