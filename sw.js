@@ -1,6 +1,6 @@
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open('mcbe-cache-v1').then(cache => {
+    caches.open('idktoast').then(cache => {
       return cache.addAll([
         '/',         // homepage
         '/index.html',
