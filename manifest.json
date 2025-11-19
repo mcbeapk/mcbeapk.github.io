@@ -3,6 +3,7 @@
   "short_name": "idktoast",
   "start_url": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#212425",
   "theme_color": "#00b2ff",
   "icons": [
