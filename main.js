@@ -1,4 +1,5 @@
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js')
-  .catch(err => console.log('sw fail', err))
+    .then(() => console.log('sw registered'))
+    .catch(console.error);
 }
