@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>get the app</title>
+  <link rel="manifest" href="/manifest.json">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #323738;
+      color: #fff;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    #install-popup {
+      display: none;
+      background-color: #212425;
+      border: 2px solid #00b2ff;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 300px;
+      text-align: center;
+    }
+
+    #install-popup button {
+      margin-top: 20px;
+      background-color: #00b2ff;
+      border: none;
+      padding: 10px 20px;
+      color: #fff;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #install-popup button:hover {
+      background-color: #008ecf;
+    }
+  </style>
+</head>
+<body>
+  <h1>idktoast</h1>
+  <p>install the app for more content!</p>
+
+  <div id="install-popup">
+    <p>want the app?</p>
+    <button id="install-btn">install</button>
+  </div>
+
+  <script>
+    let deferredPrompt;
+    const popup = document.getElementById('install-popup');
+    const btn = document.getElementById('install-btn');
+
+    // listen for install prompt event
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault(); // stop auto prompt
+      deferredPrompt = e;
+      popup.style.display = 'block';
+    });
+
+    btn.addEventListener('click', async () => {
+      if (!deferredPrompt) return;
+      deferredPrompt.prompt(); // show the browser prompt
+      const { outcome } = await deferredPrompt.userChoice;
+      if (outcome === 'accepted') {
+        console.log('user installed app');
+      } else {
+        console.log('user dismissed install');
+      }
+      deferredPrompt = null;
+      popup.style.display = 'none';
+    });
+
+    // fallback: if user already installed
+    window.addEventListener('appinstalled', () => {
+      console.log('app installed');
+      popup.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
