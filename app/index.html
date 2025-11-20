@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>get the app</title>
+  <title>Install MCBE APK - Test</title>
   <link rel="manifest" href="/manifest.json">
   <style>
     body {
@@ -13,19 +13,19 @@
       color: #fff;
       font-family: sans-serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      flex-direction: column;
     }
 
     #install-popup {
-      display: none;
+      display: none; /* will be forced to show by JS */
       background-color: #212425;
       border: 2px solid #00b2ff;
       border-radius: 12px;
       padding: 30px;
-      max-width: 300px;
+      max-width: 320px;
       text-align: center;
     }
 
@@ -46,44 +46,52 @@
   </style>
 </head>
 <body>
-  <h1>idktoast</h1>
-  <p>install the app for more content!</p>
+  <h1>mcbeapk</h1>
+  <p>install the app for quick access</p>
 
   <div id="install-popup">
-    <p>want the app?</p>
-    <button id="install-btn">install</button>
+    <p>wanna install MCBE APK?</p>
+    <button id="install-btn">Install</button>
   </div>
 
   <script>
+    // register service worker if not already
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('SW registered'))
+        .catch(err => console.error('SW error', err));
+    }
+
     let deferredPrompt;
     const popup = document.getElementById('install-popup');
     const btn = document.getElementById('install-btn');
 
-    // listen for install prompt event
+    // normal beforeinstallprompt event
     window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault(); // stop auto prompt
+      e.preventDefault();
       deferredPrompt = e;
       popup.style.display = 'block';
     });
 
     btn.addEventListener('click', async () => {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt(); // show the browser prompt
-      const { outcome } = await deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        console.log('user installed app');
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log('Install outcome:', outcome);
+        deferredPrompt = null;
       } else {
-        console.log('user dismissed install');
+        alert('Install prompt not available on this browser 😬');
       }
-      deferredPrompt = null;
       popup.style.display = 'none';
     });
 
-    // fallback: if user already installed
     window.addEventListener('appinstalled', () => {
-      console.log('app installed');
+      console.log('app installed 👍');
       popup.style.display = 'none';
     });
+
+    // FOR TESTING: force popup to show immediately
+    popup.style.display = 'block';
   </script>
 </body>
 </html>
