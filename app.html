@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>get the app</title>
-<link rel="manifest" href="manifest.json" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Install App</title>
+
+<!-- manifest MUST be in this domain -->
+<link rel="manifest" href="/manifest.json" />
 
 <style>
   body {
     margin: 0;
     font-family: sans-serif;
     background: #212425;
-    color: white;
+    color: #ffffff;
   }
 
   #install-modal {
@@ -20,44 +22,44 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.65);
+    background: rgba(0,0,0,0.7);
     display: none;
     align-items: center;
     justify-content: center;
+    padding: 20px;
   }
 
   .modal-inner {
     background: #323738;
+    width: 100%;
+    max-width: 420px;
     padding: 20px;
-    border-radius: 10px;
-    width: 90%;
-    max-width: 400px;
-    text-align: center;
+    border-radius: 12px;
     border: 2px solid #00b2ff;
+    text-align: center;
   }
 
-  .modal-inner h2 {
+  .modal-inner h1 {
     margin-top: 0;
     color: #00b2ff;
   }
 
-  .install-btn {
-    background: #00b2ff;
-    color: #212425;
-    border: none;
-    font-size: 18px;
-    padding: 10px 20px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 15px;
+  #install-btn {
+    margin-top: 20px;
     width: 100%;
+    padding: 12px;
+    background: #00b2ff;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    color: #212425;
+    cursor: pointer;
   }
 
-  .close-btn {
+  #close-btn {
+    margin-top: 12px;
+    color: #999;
     cursor: pointer;
-    margin-top: 10px;
-    color: #aaa;
-    font-size: 14px;
   }
 </style>
 </head>
@@ -66,35 +68,36 @@
 
 <div id="install-modal">
   <div class="modal-inner">
-    <h2>download the app here!</h2>
-    <p>download the app for more content<p></p>
-    <button class="install-btn" id="install-trigger">install</button>
-    <div class="close-btn" id="close-modal">maybe later</div>
+    <h1>install app</h1>
+    <p>add this app to your home screen for faster access.</p>
+    <button id="install-btn">install</button>
+    <div id="close-btn">maybe later</div>
   </div>
 </div>
 
 <script>
 let deferredPrompt = null;
 
-window.addEventListener('beforeinstallprompt', (e) => {
+window.addEventListener("beforeinstallprompt", (e) => {
   e.preventDefault();
   deferredPrompt = e;
 
-  document.getElementById('install-modal').style.display = 'flex';
+  // show modal
+  document.getElementById("install-modal").style.display = "flex";
 });
 
-document.getElementById('install-trigger').addEventListener('click', async () => {
+document.getElementById("install-btn").addEventListener("click", async () => {
   if (!deferredPrompt) return;
 
   deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
+  await deferredPrompt.userChoice;
 
   deferredPrompt = null;
-  document.getElementById('install-modal').style.display = 'none';
+  document.getElementById("install-modal").style.display = "none";
 });
 
-document.getElementById('close-modal').addEventListener('click', () => {
-  document.getElementById('install-modal').style.display = 'none';
+document.getElementById("close-btn").addEventListener("click", () => {
+  document.getElementById("install-modal").style.display = "none";
 });
 </script>
 
