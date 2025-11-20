@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>get the app</title>
+<link rel="manifest" href="manifest.json" />
+
+<style>
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #212425;
+    color: white;
+  }
+
+  #install-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.65);
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-inner {
+    background: #323738;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    border: 2px solid #00b2ff;
+  }
+
+  .modal-inner h2 {
+    margin-top: 0;
+    color: #00b2ff;
+  }
+
+  .install-btn {
+    background: #00b2ff;
+    color: #212425;
+    border: none;
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+  }
+
+  .close-btn {
+    cursor: pointer;
+    margin-top: 10px;
+    color: #aaa;
+    font-size: 14px;
+  }
+</style>
+</head>
+
+<body>
+
+<div id="install-modal">
+  <div class="modal-inner">
+    <h2>download the app here!</h2>
+    <p>download the app for more content<p></p>
+    <button class="install-btn" id="install-trigger">install</button>
+    <div class="close-btn" id="close-modal">maybe later</div>
+  </div>
+</div>
+
+<script>
+let deferredPrompt = null;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  document.getElementById('install-modal').style.display = 'flex';
+});
+
+document.getElementById('install-trigger').addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+
+  deferredPrompt = null;
+  document.getElementById('install-modal').style.display = 'none';
+});
+
+document.getElementById('close-modal').addEventListener('click', () => {
+  document.getElementById('install-modal').style.display = 'none';
+});
+</script>
+
+</body>
+</html>
