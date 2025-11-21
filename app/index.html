@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Download the WebApp</title>
+  <title>download the app</title>
   <link rel="manifest" href="/manifest.json">
   <style>
     body {
       margin: 0;
       padding: 0;
-      background-color: #323738;
+      background-color: #212425;
       color: #fff;
       font-family: sans-serif;
       display: flex;
@@ -18,7 +18,39 @@
       align-items: center;
       height: 100vh;
     }
-
+    
+    p {
+      color: #5b6366
+    }
+    
+    s {
+      font-size: 10px
+    }
+    
+    a {
+      color: #00b2ff;
+      background-color: #00b2ff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    
+    h1 {
+      color: #f0f0f0;
+      font-size: 40px
+    }
+    p1 {
+      color: #bebebe
+    }
+    button {
+      color: #0f0f0;
+      background-color: #00b2ff;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    
     #install-popup {
       display: none; /* will be forced to show by JS */
       background-color: #212425;
@@ -29,69 +61,30 @@
       text-align: center;
     }
 
-    #install-popup button {
-      margin-top: 20px;
-      background-color: #00b2ff;
-      border: none;
-      padding: 10px 20px;
-      color: #fff;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
     #install-popup button:hover {
       background-color: #008ecf;
     }
   </style>
 </head>
 <body>
-  <h1>idktoast</h1>
-  <p>install the web app for quick access</p>
+  <h1>idktoast app</h1>
+  <p>install the <strong>web app</strong> for quick access</p>
+  <p1><br><br>download guides:<br><br></p1>
+  <a href="https://xyztoast.github.io/dl/windows">
+    <button>windows</button>
+  </a>
+  <s><br></s>
+  <a href="https://xyztoast.github.io/dl/mac">
+    <button>mac</button>
+  </a>
+  <s><br></s>
+  <a href="https://xyztoast.github.io/dl/android">
+    <button>android</button>
+  </a>
+  <s><br></s>
+  <a href="https://xyztoast.github.io/dl/ios">
+    <button>iOS</button>
+  </a>
 
-  <div id="install-popup">
-    <p>wanna install idktoast?</p>
-    <button id="install-btn">Install</button>
-  </div>
-
-  <script>
-    // register service worker if not already
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('SW registered'))
-        .catch(err => console.error('SW error', err));
-    }
-
-    let deferredPrompt;
-    const popup = document.getElementById('install-popup');
-    const btn = document.getElementById('install-btn');
-
-    // normal beforeinstallprompt event
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      popup.style.display = 'block';
-    });
-
-    btn.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log('Install outcome:', outcome);
-        deferredPrompt = null;
-      } else {
-        alert('Install prompt not available on this browser 😬');
-      }
-      popup.style.display = 'none';
-    });
-
-    window.addEventListener('appinstalled', () => {
-      console.log('app installed 👍');
-      popup.style.display = 'none';
-    });
-
-    // FOR TESTING: force popup to show immediately
-    popup.style.display = 'block';
-  </script>
 </body>
 </html>
